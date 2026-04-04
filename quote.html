@@ -593,7 +593,7 @@
       <div class="field">
         <label>Facility Type <span class="req">*</span></label>
         <div class="check-grid cols-2">
-          <label class="check-item"><input type="radio" name="facility_type" value="Standard office" required> Standard office</label>
+          <label class="check-item"><input type="radio" name="facility_type" value="Standard office"> Standard office</label>
           <label class="check-item"><input type="radio" name="facility_type" value="Medical office (general)"> Medical office (general)</label>
           <label class="check-item"><input type="radio" name="facility_type" value="Medical office (surgical/specialty)"> Medical — surgical / specialty</label>
           <label class="check-item"><input type="radio" name="facility_type" value="Retail store"> Retail store</label>
@@ -699,7 +699,7 @@
       <div class="field">
         <label>How often do you need cleaning? <span class="req">*</span></label>
         <div class="check-grid cols-2">
-          <label class="check-item"><input type="radio" name="frequency" value="Daily (5x/week)" required> Daily (5x/week)</label>
+          <label class="check-item"><input type="radio" name="frequency" value="Daily (5x/week)"> Daily (5x/week)</label>
           <label class="check-item"><input type="radio" name="frequency" value="3x per week"> 3x per week</label>
           <label class="check-item"><input type="radio" name="frequency" value="2x per week"> 2x per week</label>
           <label class="check-item"><input type="radio" name="frequency" value="Weekly"> Weekly</label>
@@ -714,7 +714,7 @@
       <div class="field">
         <label>Preferred Time of Day <span class="req">*</span></label>
         <div class="check-grid cols-2">
-          <label class="check-item"><input type="radio" name="time_pref" value="During business hours (daytime)" required> During business hours</label>
+          <label class="check-item"><input type="radio" name="time_pref" value="During business hours (daytime)"> During business hours</label>
           <label class="check-item"><input type="radio" name="time_pref" value="After business hours (evenings)"> After business hours</label>
           <label class="check-item"><input type="radio" name="time_pref" value="Early morning (before open)"> Early morning</label>
           <label class="check-item"><input type="radio" name="time_pref" value="Weekends only"> Weekends only</label>
@@ -778,7 +778,7 @@
       <div class="field">
         <label>How will cleaning staff access the facility? <span class="req">*</span></label>
         <div class="check-grid cols-2">
-          <label class="check-item"><input type="radio" name="access" value="Key provided" required> Key provided</label>
+          <label class="check-item"><input type="radio" name="access" value="Key provided"> Key provided</label>
           <label class="check-item"><input type="radio" name="access" value="Access card / fob"> Access card / fob</label>
           <label class="check-item"><input type="radio" name="access" value="Door code provided"> Door code provided</label>
           <label class="check-item"><input type="radio" name="access" value="Someone will let them in"> Someone will let them in</label>
@@ -833,7 +833,7 @@
       <div class="field">
         <label>Cleaning Product Preferences <span class="req">*</span></label>
         <div class="check-grid cols-2">
-          <label class="check-item"><input type="radio" name="products" value="No preference" required> No preference</label>
+          <label class="check-item"><input type="radio" name="products" value="No preference"> No preference</label>
           <label class="check-item"><input type="radio" name="products" value="Eco-friendly / green only"> Eco-friendly / green only</label>
           <label class="check-item"><input type="radio" name="products" value="Fragrance-free"> Fragrance-free</label>
           <label class="check-item"><input type="radio" name="products" value="Hospital-grade disinfectants"> Hospital-grade disinfectants</label>
@@ -957,21 +957,22 @@
   const requiredFields = document.querySelectorAll('[required]');
   const progressFill  = document.getElementById('progressFill');
   const progressLabel = document.getElementById('progressLabel');
+  const requiredRadioGroups = ['facility_type','frequency','time_pref','access','products'];
 
   function updateProgress() {
     const groups = {};
     requiredFields.forEach(f => {
-      const name = f.name;
-      if (!groups[name]) groups[name] = false;
-      if (f.type === 'radio' || f.type === 'checkbox') {
-        if (f.checked) groups[name] = true;
-      } else {
-        if (f.value.trim()) groups[name] = true;
-      }
+      if (!groups[f.name]) groups[f.name] = false;
+      if (f.value.trim()) groups[f.name] = true;
     });
-    const keys  = Object.keys(groups);
-    const done  = Object.values(groups).filter(Boolean).length;
-    const pct   = keys.length ? Math.round((done / keys.length) * 100) : 0;
+    requiredRadioGroups.forEach(name => {
+      if (!groups[name]) groups[name] = false;
+      const anyChecked = Array.from(document.querySelectorAll('input[type="radio"][name="'+name+'"]')).some(r => r.checked);
+      if (anyChecked) groups[name] = true;
+    });
+    const keys = Object.keys(groups);
+    const done = Object.values(groups).filter(Boolean).length;
+    const pct  = keys.length ? Math.round((done / keys.length) * 100) : 0;
     progressFill.style.width  = pct + '%';
     progressLabel.textContent = pct + '% complete';
   }
@@ -1015,17 +1016,22 @@
       }
     });
 
-    // Validate radio groups marked required
-    const radioGroups = {};
-    document.querySelectorAll('input[type="radio"][required]').forEach(r => {
-      if (!radioGroups[r.name]) radioGroups[r.name] = false;
-      if (r.checked) radioGroups[r.name] = true;
-    });
-    Object.entries(radioGroups).forEach(([name, checked]) => {
-      if (!checked) {
-        const group = document.querySelector(`[name="${name}"]`);
-        const msg = group?.closest('.field')?.querySelector('.error-msg');
+    // Validate radio groups - check by group name, not by required attribute
+    const radioGroupNames = new Set();
+    document.querySelectorAll('input[type="radio"][required]').forEach(r => radioGroupNames.add(r.name));
+    radioGroupNames.forEach(name => {
+      const allInGroup = document.querySelectorAll(`input[type="radio"][name="${name}"]`);
+      const anyChecked = Array.from(allInGroup).some(r => r.checked);
+      if (!anyChecked) {
+        // Find the closest section heading or field wrapper to show error near
+        const firstRadio = allInGroup[0];
+        const container = firstRadio?.closest('.field') || firstRadio?.closest('fieldset') || firstRadio?.closest('.form-section');
+        const msg = container?.querySelector('.error-msg');
         if (msg) msg.classList.add('show');
+        else {
+          // fallback: highlight the radio group container
+          if (firstRadio) firstRadio.closest('.check-group, .check-list, div')?.classList.add('error');
+        }
         valid = false;
       }
     });
@@ -1040,7 +1046,7 @@
     }
 
     if (!valid) {
-      const firstError = document.querySelector('.error-msg.show');
+      const firstError = document.querySelector('.error-msg.show, .error');
       if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
