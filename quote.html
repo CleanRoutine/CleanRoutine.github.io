@@ -949,10 +949,10 @@
 <div class="success-screen" id="successScreen">
   <div class="success-icon">✓</div>
   <h2>Quote request received!</h2>
-  <p>Thank you for reaching out. We've received your information and will send your customized cleaning quote within <strong>1 business day</strong>.<br><br>If you need to reach us sooner, call or text us at <strong>(678) 833-3847</strong> or email <strong><a href="mailto:contact@acroutine.com" id="successEmail"></a></strong>.</p>
+  <p>Thank you for reaching out. We've received your information and will send your customized cleaning quote within <strong>1 business day</strong>.<br><br>If you need to reach us sooner, call or text us at <strong>(678) 833-3847</strong> or email <strong><span id="successEmail"></span></strong>.</p>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── Progress tracking ────────────────────────────────────────────
   const requiredFields = document.querySelectorAll('[required]');
   const progressFill  = document.getElementById('progressFill');
@@ -981,8 +981,17 @@
   document.getElementById('intakeForm').addEventListener('change', updateProgress);
   updateProgress();
   // Set email via JS to prevent Cloudflare obfuscation
-  var se = document.getElementById('successEmail');
-  if(se){ se.textContent = ['contact','acroutine.com'].join('@'); se.href = 'mailto:' + ['contact','acroutine.com'].join('@'); }
+  // Build email link dynamically to prevent Cloudflare obfuscation
+  (function(){
+    var el = document.getElementById('successEmail');
+    if(!el) return;
+    var u = 'contact'; var d = 'acroutine.com';
+    var a = document.createElement('a');
+    a.href = 'mail' + 'to:' + u + '@' + d;
+    a.textContent = u + '@' + d;
+    a.style.color = 'inherit';
+    el.appendChild(a);
+  })();
 
   // ── Conditional: facility "Other" ────────────────────────────────
   document.querySelectorAll('[name="facility_type"]').forEach(r => {
@@ -1166,8 +1175,4 @@
       <div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:6px 28px;">
         <a href="tel:6788333847" style="font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;">(678) 833-3847</a>
         <span style="font-size:13px;color:rgba(255,255,255,.55);">contact&#64;acroutine&#46;com</span>
-        <span style="font-size:13px;color:rgba(255,255,255,.55);">Available Mon&#8211;Sat</span>
-      </div>
-    </div>
-  </div>
-  <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;jus
+        <span style="font-size:13px;color:rgba(255,255,255,.55);">Av
