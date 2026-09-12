@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Clean Routine | Metro Atlanta Commercial Cleaning</title>
+<title>A Clean Routine | Commercial Cleaning Services</title>
 <meta name="description" content="Licensed, bonded commercial cleaning for Metro Atlanta businesses. Photo documented, background checked, built on accountability.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://acroutine.com">
-<meta property="og:title" content="A Clean Routine | Metro Atlanta Commercial Cleaning">
+<meta property="og:title" content="A Clean Routine | Commercial Cleaning Services">
 <meta property="og:description" content="Licensed, bonded commercial cleaning for Metro Atlanta businesses. Photo documented, background checked, built on accountability.">
 <meta property="og:image" content="https://acroutine.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="A Clean Routine | Metro Atlanta Commercial Cleaning">
+<meta name="twitter:title" content="A Clean Routine | Commercial Cleaning Services">
 <meta name="twitter:description" content="Licensed, bonded commercial cleaning for Metro Atlanta businesses. Photo documented, background checked, built on accountability.">
 <meta name="twitter:image" content="https://acroutine.com/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -180,8 +180,6 @@ footer{background:var(--navy);padding:48px 2rem 28px}
     <a class="nl" href="about.html">About</a>
     <a class="nl" href="quote.html">Get a Quote</a>
     <a class="nl" href="contact.html">Contact</a>
-    <div class="nav-divider"></div>
-    <a class="nav-phone" href="tel:6788333847">&#9990; (678) 833-3847</a>
   </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -194,11 +192,9 @@ footer{background:var(--navy);padding:48px 2rem 28px}
   <a href="about.html">About</a>
   <a href="quote.html">Get a Quote</a>
   <a href="contact.html">Contact</a>
-  <a href="tel:6788333847" style="color:rgba(255,255,255,.7);font-size:15px;font-weight:500;">&#9990; (678) 833-3847</a>
 </div>
 
 <div class="hero">
-  <div class="hero-tag">Metro Atlanta Commercial Cleaning</div>
   <h1>Your Facility Deserves <em>Consistent</em> Excellence</h1>
   <p class="hero-outcome">Your clients notice a clean space. Your employees perform better in one. We make sure it stays that way.</p>
   <div class="btn-row">
@@ -321,6 +317,7 @@ footer{background:var(--navy);padding:48px 2rem 28px}
       <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px;">Contact</div>
       <div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:6px 28px;">
         <a href="tel:6788333847" style="font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;">(678) 833-3847</a>
+        <a href="tel:4633634653" style="font-size:13px;color:rgba(255,255,255,.55);text-decoration:none;">(463) 363-4653</a>
         <span style="font-size:13px;color:rgba(255,255,255,.55);">contact&#64;acroutine&#46;com</span>
         <span style="font-size:13px;color:rgba(255,255,255,.55);">Available Mon&#8211;Sat</span>
       </div>
@@ -353,36 +350,5 @@ function animateCounter(el){
 }
 document.querySelectorAll('[data-target]').forEach(el=>animateCounter(el));
 </script>
-        <span style="font-size:13px;color:rgba(255,255,255,.55);">Available Mon&#8211;Sat</span>
-      </div>
-    </div>
-
-  </div>
-  <div class="footer-bottom">
-    <p>&#169; 2026 A Clean Routine LLC. All rights reserved.</p>
-    <p>Reliable. Professional. Detail-Driven.</p>
-  </div>
-</footer>
-<script>
-function toggleMenu(){
-  document.getElementById('mobileMenu').classList.toggle('open');
-}
-function animateCounter(el){
-  const target=parseInt(el.dataset.target);
-  const prefix=el.dataset.prefix||'';
-  const suffix=el.dataset.suffix||'';
-  const duration=1800;
-  const start=performance.now();
-  function update(now){
-    const elapsed=now-start;
-    const progress=Math.min(elapsed/duration,1);
-    const ease=1-Math.pow(1-progress,3);
-    const current=Math.round(ease*target);
-    el.textContent=prefix+current+suffix;
-    if(progress<1)requestAnimationFrame(update);
-  }
-  requestAnimationFrame(update);
-}
-const counterObserver=new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting&&entry
+</body>
+</html>
