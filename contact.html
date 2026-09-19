@@ -163,8 +163,8 @@ footer{background:var(--navy);padding:48px 2rem 28px}
           <div class="contact-dot"><svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
           <div>
             <div class="contact-item-label">Phone</div>
-            <div class="contact-item-val"><a href="tel:6788333847">(678) 833-3847</a> (Georgia)</div>
-            <div class="contact-item-val" style="margin-top:4px;"><a href="tel:4633634653">(463) 363-4653</a> (Indiana)</div>
+            <div class="contact-item-val"><a href="tel:6788333847" style="color:var(--green);font-weight:600;">(678) 833-3847</a> (Georgia)</div>
+            <div class="contact-item-val" style="margin-top:4px;"><a href="tel:4633634653" style="color:var(--green);font-weight:600;">(463) 363-4653</a> (Indiana)</div>
             <div class="contact-item-sub">Available Mon&#8211;Sat, 8am&#8211;6pm</div>
           </div>
         </div>
@@ -291,7 +291,7 @@ footer{background:var(--navy);padding:48px 2rem 28px}
 
 <script>
 document.getElementById("footer-email").textContent="contact@acroutine.com";
-document.getElementById("contact-email").textContent="contact@acroutine.com";
+document.getElementById("contact-email").innerHTML="<a href=\"mailto:contact@acroutine.com\" style=\"color:var(--green);font-weight:600;text-decoration:none;\">contact@acroutine.com</a>";
 function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
 document.getElementById('contactForm').addEventListener('submit',function(e){
   e.preventDefault();
